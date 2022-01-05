@@ -1,16 +1,18 @@
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
-import dotenv from 'dotenv'
 
-import invoiceRoutes from './routes/invoices.js'
-import clientRoutes from './routes/clients.js'
-import authRoutes from './routes/auth.js'
-import userRoutes from './routes/users.js'
-import enterpriseRoutes from './routes/enterprises.js'
+import invoiceRoutes from './routes/invoices'
+import clientRoutes from './routes/clients'
+import authRoutes from './routes/auth'
+import userRoutes from './routes/users'
+import enterpriseRoutes from './routes/enterprises'
+
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config();
+}
 
 const app = express()
-dotenv.config()
 
 app.use((express.json({ limit: "30mb", extended: true})))
 app.use((express.urlencoded({ limit: "30mb", extended: true})))

@@ -1,5 +1,6 @@
 import express from 'express'
-import authMiddleware from '../middleware/auth.js'
+
+import authMiddleware from '../middleware/auth'
 import {
     getClient,
     getClients,
@@ -9,7 +10,7 @@ import {
     createClientAddress,
     updateClientAddress,
     deleteClientAddress,
-} from '../controllers/clients.js'
+} from '../controllers/clients'
 
 const router = express.Router()
 

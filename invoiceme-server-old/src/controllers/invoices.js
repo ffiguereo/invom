@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-import InvoiceModel from '../models/InvoiceModel.js'
+import InvoiceModel from '../models/InvoiceModel'
 
 export const getInvoices = async (req, res) => {
     const {enterpriseId: enterprise} = req.user;

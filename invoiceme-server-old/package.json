@@ -6,7 +6,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node build/index.js",
-    "build": "esbuild index.js --platform=node --bundle --outfile=build/index.js"
+    "start:dev": "npm run build -- --watch",
+    "build": "esbuild src/index.js --platform=node --bundle --outdir=build"
   },
   "keywords": [],
   "author": "Panshak Solomon",

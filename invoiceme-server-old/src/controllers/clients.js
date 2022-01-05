@@ -1,6 +1,6 @@
 import mongoose from 'mongoose'
 
-import ClientModel from '../models/ClientModel.js'
+import ClientModel from '../models/ClientModel'
 
 export const getClient = async (req, res) => {
     const { enterpriseId: enterprise } = req.user;

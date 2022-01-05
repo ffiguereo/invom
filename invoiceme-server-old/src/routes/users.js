@@ -1,6 +1,7 @@
 import express from 'express'
-import authMiddleware from '../middleware/auth.js'
-import { getUsers, createUser, updateUser, deleteUser, getUser } from '../controllers/users.js'
+
+import authMiddleware from '../middleware/auth'
+import { getUsers, createUser, updateUser, deleteUser, getUser } from '../controllers/users'
 
 const router = express.Router()
 

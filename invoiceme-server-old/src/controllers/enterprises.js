@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-import EnterpriseModel from '../models/EnterpriseModel.js';
+import EnterpriseModel from '../models/EnterpriseModel';
 
 export async function getEnterprise(req, res) {
     const {enterpriseId} = req.user;

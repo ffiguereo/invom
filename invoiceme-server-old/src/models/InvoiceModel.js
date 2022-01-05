@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
-import {ENTERPRISE_MODEL_NAME} from "./EnterpriseModel.js";
-import {CLIENT_MODEL_NAME} from "./ClientModel.js";
+
+import {ENTERPRISE_MODEL_NAME} from "./EnterpriseModel";
+import {CLIENT_MODEL_NAME} from "./ClientModel";
 
 export const INVOICE_MODEL_NAME = 'InvoiceModel';
 

@@ -1,14 +1,7 @@
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcryptjs'
-import dotenv from 'dotenv'
-
-dotenv.config()
 
 const SECRET = process.env.SECRET;
-const HOST = process.env.SMTP_HOST
-const PORT = process.env.SMTP_PORT
-const Auth = process.env.SMTP_USER
-const PASS = process.env.SMTP_PASS
 
 import UserModel from '../models/UserModel.js'
 import EnterpriseModel from '../models/EnterpriseModel.js';

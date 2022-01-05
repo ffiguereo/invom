@@ -1,5 +1,6 @@
 import express from 'express'
-import authMiddleware from '../middleware/auth.js'
+
+import authMiddleware from '../middleware/auth'
 import {
     getInvoices,
     createInvoice,
@@ -12,7 +13,7 @@ import {
     addInvoicePayment,
     deleteInvoicePayment,
     updateInvoicePayment
-} from '../controllers/invoices.js'
+} from '../controllers/invoices'
 
 const router = express.Router()
 

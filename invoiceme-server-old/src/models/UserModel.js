@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
-import {ENTERPRISE_MODEL_NAME} from "./EnterpriseModel.js";
+
+import {ENTERPRISE_MODEL_NAME} from "./EnterpriseModel";
 
 export const USER_MODEL_NAME = 'UserModel';
 
