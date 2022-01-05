@@ -1,5 +1,4 @@
 import React from 'react';
-import { useMemo } from 'react/cjs/react.development';
 
 import { classNames } from '../utils/class-names';
 
@@ -9,7 +8,7 @@ const SUCCESS = `disabled:hover:bg-green-600 text-white bg-green-600 hover:bg-gr
 const WARNING = `disabled:hover:bg-amber-600 text-white bg-amber-600 hover:bg-amber-700 focus:ring-amber-500`;
 
 export const Button = React.forwardRef(({ children, className, color, type, ...props }, ref) => {
-  const variantClass = useMemo(() => {
+  const variantClass = React.useMemo(() => {
     if (!color || color === 'primary') return PRIMARY;
     if (color === 'danger') return DANGER;
     if (color === 'success') return SUCCESS;
