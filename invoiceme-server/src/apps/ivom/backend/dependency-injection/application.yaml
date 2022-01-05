@@ -1,0 +1,9 @@
+services:
+
+  Apps.ivom.controllers.StatusGetController:
+    class: ../../controllers/StatusGetController
+    arguments: []
+
+  Apps.ivom.controllers.InvoicePutController:
+    class: ../../controllers/InvoicePutController
+    arguments: []

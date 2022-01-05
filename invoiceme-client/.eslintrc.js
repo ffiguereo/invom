@@ -1,0 +1,72 @@
+module.exports = {
+  env: {
+    browser: true,
+    es2021: true,
+  },
+  extends: [
+    'plugin:react/recommended',
+    'airbnb',
+    'plugin:import/errors',
+    'plugin:import/warnings',
+    'plugin:unicorn/recommended',
+    'plugin:prettier/recommended',
+  ],
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
+    },
+    ecmaVersion: 12,
+    sourceType: 'module',
+  },
+  plugins: ['react', 'react-hooks', 'import', 'unicorn', 'simple-import-sort', 'unused-imports', 'prettier'],
+  rules: {
+    'prettier/prettier': ['error', { singleQuote: true }],
+    'arrow-body-style': 'off',
+    'prefer-arrow-callback': 'off',
+    'react/react-in-jsx-scope': 'off',
+    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx'] }],
+    'sort-imports': 'off',
+    'import/first': 'error',
+    'import/newline-after-import': 'error',
+    'import/no-unresolved': 'off',
+    'import/order': 'off',
+    'import/no-deprecated': 'warn',
+    'import/no-extraneous-dependencies': 'off',
+    'import/prefer-default-export': 'off',
+    'import/no-default-export': 'error',
+    'simple-import-sort/imports': 'error',
+    'simple-import-sort/exports': 'error',
+    'unused-imports/no-unused-imports-ts': 'error',
+    'unused-imports/no-unused-vars-ts': [
+      'error',
+      {
+        args: 'after-used',
+        argsIgnorePattern: '^_',
+      },
+    ],
+
+    'unicorn/filename-case': 0,
+    'unicorn/import-style': 'off',
+    'unicorn/no-null': 'off',
+    'unicorn/no-array-reduce': 'off',
+    'unicorn/prevent-abbreviations': 'off',
+    'unicorn/prefer-module': 'off',
+    'unicorn/prefer-node-protocol': 'off',
+    'react/prop-types': 'off',
+    'react/function-component-definition': [2, { namedComponents: 'function-declaration' }],
+    'react/button-has-type': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'react/no-unstable-nested-components': 'off',
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+    'no-underscore-dangle': ['error', { allow: ['_id'] }],
+    'jsx-a11y/label-has-associated-control': [
+      'error',
+      {
+        required: {
+          some: ['nesting', 'id'],
+        },
+      },
+    ],
+  },
+};
