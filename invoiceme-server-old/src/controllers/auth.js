@@ -1,8 +1,6 @@
 import jwt from "jsonwebtoken"
 import bcrypt from 'bcryptjs'
 
-const SECRET = process.env.SECRET;
-
 import UserModel from '../models/UserModel.js'
 import EnterpriseModel from '../models/EnterpriseModel.js';
 
@@ -13,7 +11,7 @@ export function createJwtToken(userModel) {
             enterprise: userModel.enterprise,
             id: userModel._id
         },
-        SECRET,
+        process.env.SECRET,
         {
             expiresIn: "1d"
         }
@@ -38,6 +36,7 @@ export async function signIn(req, res) {
         //Then send the token to the client/frontend
         res.status(200).json({result: existingUser, token})
     } catch (error) {
+        console.error({ ...process.env}, error);
         res.status(500).json({message: "Something went wrong"})
     }
 }

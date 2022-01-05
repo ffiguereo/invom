@@ -1,6 +1,7 @@
 import express from 'express'
 import cors from 'cors'
 import mongoose from 'mongoose'
+import path from 'path';
 
 import invoiceRoutes from './routes/invoices'
 import clientRoutes from './routes/clients'
@@ -9,7 +10,7 @@ import userRoutes from './routes/users'
 import enterpriseRoutes from './routes/enterprises'
 
 if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
+    require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
 }
 
 const app = express()

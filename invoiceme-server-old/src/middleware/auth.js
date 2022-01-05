@@ -1,8 +1,6 @@
 import jwt from 'jsonwebtoken'
 import UserModel from "../models/UserModel";
 
-const SECRET = process.env.SECRET;
-
 async function auth(req, res, next) {
     try {
         if (!req.headers.authorization) {
@@ -15,7 +13,7 @@ async function auth(req, res, next) {
             return res.sendStatus(401);
         }
 
-        const decodeData = jwt.verify(token, SECRET)
+        const decodeData = jwt.verify(token, process.env.SECRET)
 
         const user = await UserModel.findById(decodeData?.id).populate('enterprise')
 
