@@ -19,10 +19,10 @@ export const clientAddressSchemaValidation = yup
     idNumber: yup.string(),
     phone: yup.string().required(),
     address: yup.string().required(),
-    addressExtra: yup.string().required(),
-    postalCode: yup.string().required(),
-    city: yup.string().required(),
-    state: yup.string().required(),
+    addressExtra: yup.string(),
+    postalCode: yup.string(),
+    city: yup.string(),
+    state: yup.string(),
     country: yup.string().required(),
   })
   .required();
@@ -49,13 +49,13 @@ export function ClientAddressDialog() {
     } else {
       reset({
         name: showDialog.data.address.name,
-        idNumber: showDialog.data.address.idNumber,
+        idNumber: showDialog.data.address?.idNumber,
         phone: showDialog.data.address.phone,
         address: showDialog.data.address.address,
-        addressExtra: showDialog.data.address.addressExtra,
-        postalCode: showDialog.data.address.postalCode,
-        city: showDialog.data.address.city,
-        state: showDialog.data.address.state,
+        addressExtra: showDialog.data.address?.addressExtra,
+        postalCode: showDialog.data.address?.postalCode,
+        city: showDialog.data.address?.city,
+        state: showDialog.data.address?.state,
         country: showDialog.data.address.country,
       });
     }

@@ -10,17 +10,17 @@ const address = new mongoose.Schema({
     phone: {type: String, required: true},
     address: {type: String, required: true},
     addressExtra: String,
-    city: {type: String, required: true},
-    state: {type: String, required: true},
+    city: {type: String, required: false},
+    state: {type: String, required: false},
     country: {type: String, required: true},
-    postalCode: {type: String, required: true},
+    postalCode: {type: String, required: false},
 });
 
 const ClientSchema = new mongoose.Schema({
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
-    email: {type: String, required: true},
-    phone: String,
+    email: {type: String, required: false},
+    phone: {type: String, required: true},
     address: { type: [address], default: [] },
     enterprise: { type: mongoose.Schema.Types.ObjectId, ref: ENTERPRISE_MODEL_NAME, required: true },
     createdAt: { type: Date, default: new Date() }

@@ -26,7 +26,7 @@ export function ClientAddressTable({ clientId, addresses = [] }) {
         Cell: ({ row: { original } }) => {
           return (
             <p className="truncate">
-              {original.address}, {original.addressExtra}
+              {original.address}, {original?.addressExtra}
             </p>
           );
         },

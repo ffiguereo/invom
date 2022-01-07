@@ -15,10 +15,10 @@ const address = new mongoose.Schema({
     phone: {type: String, required: true},
     address: {type: String, required: true},
     addressExtra: String,
-    city: {type: String, required: true},
-    state: {type: String, required: true},
+    city: {type: String, required: false},
+    state: {type: String, required: false},
     country: {type: String, required: true},
-    postalCode: {type: String, required: true},
+    postalCode: {type: String, required: false},
 });
 
 const paymentRecord= new mongoose.Schema({

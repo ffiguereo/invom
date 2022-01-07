@@ -13,8 +13,8 @@ export const clientSchemaValidation = yup
   .object({
     firstName: yup.string().required(),
     lastName: yup.string().required(),
-    email: yup.string().email().required(),
-    phone: yup.string(),
+    email: yup.string().email(),
+    phone: yup.string().required(),
   })
   .required();
 
@@ -42,11 +42,11 @@ export function Client() {
       reset({
         firstName: client.firstName,
         lastName: client.lastName,
-        email: client.email,
+        email: client?.email,
         phone: client.phone,
       });
     }
-  }, [client]);
+  }, [client, reset]);
 
   const onSubmit = useCallback(
     async (data) => {
@@ -69,7 +69,7 @@ export function Client() {
         });
       }
     },
-    [createClientMutation, updateClientMutation, isNewClient],
+    [createClientMutation, updateClientMutation, isNewClient, queryClient, navigate, clientId],
   );
 
   if (isLoading) {
