@@ -54,7 +54,7 @@ export function InvoiceItemDialog() {
         discount: showDialog.data.item.discount,
       });
     }
-  }, [showDialog]);
+  }, [showDialog, reset]);
 
   const onSubmit = useCallback(
     async (data) => {
@@ -83,7 +83,7 @@ export function InvoiceItemDialog() {
           });
       }
     },
-    [isNewItem, showDialog],
+    [isNewItem, showDialog, close, queryClient, createInvoiceItemMutation, updateInvoiceItemMutation],
   );
 
   return (
@@ -119,6 +119,7 @@ export function InvoiceItemDialog() {
             <div className="col-span-3">
               <FormField
                 type="number"
+                step="0.01"
                 placeholder="Unit Price"
                 label="Unit Price"
                 {...register('unitPrice')}

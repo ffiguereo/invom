@@ -63,7 +63,7 @@ export function InvoicePaymentDialog() {
         note: showDialog.data.payment.note,
       });
     }
-  }, [showDialog]);
+  }, [showDialog, reset]);
 
   const onSubmit = useCallback(
     async (data) => {
@@ -92,7 +92,7 @@ export function InvoicePaymentDialog() {
           });
       }
     },
-    [isNewPayment, showDialog],
+    [isNewPayment, showDialog, close, queryClient, updateInvoicePaymentMutation, createInvoicePaymentMutation],
   );
 
   return (
@@ -123,7 +123,8 @@ export function InvoicePaymentDialog() {
 
             <div className="col-span-3">
               <FormField
-                type="text"
+                type="number"
+                step="0.01"
                 placeholder="Amount Paid"
                 label="Amount Paid"
                 {...register('amountPaid')}
