@@ -92,7 +92,8 @@ InvoiceSchema.virtual('vat').get(function () {
 });
 
 InvoiceSchema.virtual('total').get(function () {
-    const total = this.vat + this.subtotal;
+    // En vez de añadir el iva se va a quitar ya que los productos tienen el iva aplicado.
+    const total = this.subtotal - this.vat;
     return round(total);
 });
 
