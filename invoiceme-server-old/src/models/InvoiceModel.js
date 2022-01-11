@@ -79,22 +79,21 @@ const InvoiceSchema = new mongoose.Schema(
     }
 )
 
-InvoiceSchema.virtual('subtotal').get(function () {
-    return this.items.reduce((previousValue, currentValue) => {
+InvoiceSchema.virtual('total').get(function () {
+    const total = this.items.reduce((previousValue, currentValue) => {
         return previousValue + currentValue.amount;
     }, 0);
+    return round(total);
 });
 
 InvoiceSchema.virtual('vat').get(function () {
     const rates = this.rates || 0;
-    const vat = (rates / 100) * this.subtotal;
+    const vat = (rates / 100) * this.total;
     return round(vat);
 });
 
-InvoiceSchema.virtual('total').get(function () {
-    // En vez de añadir el iva se va a quitar ya que los productos tienen el iva aplicado.
-    const total = this.subtotal - this.vat;
-    return round(total);
+InvoiceSchema.virtual('subtotal').get(function () {
+    return this.total - this.vat;
 });
 
 InvoiceSchema.virtual('totalAmountReceived').get(function () {
