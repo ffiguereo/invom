@@ -1,11 +1,17 @@
-export class Invoice {
-  readonly id: string;
-  readonly name: string;
-  readonly duration: string;
+import { AggregateRoot } from "../../../Shared/domain/AggregateRoot";
+import { CompanyId } from "../../Shared/domain/Company/CompanyId";
+import { InvoiceId } from "./InvoiceId";
+import { InvoiceNumber } from "./InvoiceNumber";
 
-  constructor({ id, name, duration }: { id: string; name: string; duration: string; }) {
+export class Invoice extends AggregateRoot {
+  readonly id: InvoiceId;
+  readonly companyId: CompanyId;
+  readonly invoiceNumber: InvoiceNumber;
+
+  constructor(id: InvoiceId, companyId: CompanyId, invoiceNumber: InvoiceNumber) {
+    super();
     this.id = id;
-    this.name = name;
-    this.duration = duration;
+    this.companyId = companyId;
+    this.invoiceNumber = invoiceNumber;
   }
 }
