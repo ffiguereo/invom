@@ -2,10 +2,14 @@ services:
 
   Ivom.Invoices.application.CreateInvoiceCommandHandler:
     class: ../../../../Contexts/Ivom/Invoices/application/CreateInvoiceCommandHandler
-    arguments: []
+    arguments: ['@Shared.domain.EventBus']
 
   Ivom.Invoices.application.SearchInvoicesByCriteriaQueryHandler:
     class: ../../../../Contexts/Ivom/Invoices/application/SearchInvoicesByCriteriaQueryHandler
+    arguments: []
+
+  Ivom.Invoices.application.CreateInvoicePdfOnInvoiceCreatedEventHandler:
+    class: ../../../../Contexts/Ivom/Invoices/application/CreateInvoicePdfOnInvoiceCreatedEventHandler
     arguments: []
 
   Shared.domain.CommandBus:
@@ -28,6 +32,18 @@ services:
         {
           queryClassName: 'SearchInvoicesByCriteriaQuery',
           handlerContainerServiceId: 'Ivom.Invoices.application.SearchInvoicesByCriteriaQueryHandler'
+        }
+      ]
+    ]
+
+  Shared.domain.EventBus:
+    class: ../../../../Contexts/Shared/infrastructure/EventBusImpl
+    arguments: [
+      '@service_container',
+      [
+        {
+          eventsClassNames: ['InvoiceCreatedDomainEvent'],
+          handlerContainerServiceId: 'Ivom.Invoices.application.CreateInvoicePdfOnInvoiceCreatedEventHandler'
         }
       ]
     ]
