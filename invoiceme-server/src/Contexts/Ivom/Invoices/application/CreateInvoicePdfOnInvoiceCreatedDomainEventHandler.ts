@@ -9,10 +9,7 @@ export class CreateInvoicePdfOnInvoiceCreatedDomainEventHandler extends DomainEv
     ]
   }
 
-  async doExecute(event: DomainEvent): Promise<void> {
-    console.log({
-      message: 'CreateInvoicePdfOnInvoiceCreatedEventHandler',
-      event
-    });
+  async doExecute(_event: DomainEvent): Promise<void> {
+    // TODO generate the pdf
   }
 }

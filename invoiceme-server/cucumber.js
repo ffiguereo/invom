@@ -1,5 +1,5 @@
 const common = [
-  '--require-module ts-node/register' // Load TypeScript module
+  '--publish-quiet --require-module ts-node/register' // Load TypeScript module
 ];
 
 const ivom_backend = [
@@ -9,5 +9,6 @@ const ivom_backend = [
 ].join(' ');
 
 module.exports = {
+  default: '--publish-quiet',
   ivom_backend
 };
