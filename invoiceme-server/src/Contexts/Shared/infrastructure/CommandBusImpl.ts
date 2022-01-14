@@ -1,25 +1,16 @@
-import { ContainerBuilder } from 'node-dependency-injection';
-
 import { Command } from "../domain/Command";
 import { CommandBus } from "../domain/CommandBus";
 import { CommandHandler } from '../domain/CommandHandler';
 
-type Handler = {
-  commandClassName: string;
-  handlerContainerServiceId: string;
-}
-
 export class CommandBusImpl implements CommandBus {
   private handlers = new Map<string, CommandHandler>();
-  private readonly serviceContainer: ContainerBuilder;
 
-  constructor(serviceContainer: ContainerBuilder, handlersId: Handler[] = []) {
-    this.serviceContainer = serviceContainer;
-    this.register(handlersId);
+  constructor(...handlers: CommandHandler[]) {
+    this.register(handlers);
   }
 
   async dispatch(command: Command): Promise<void> {
-    const handler = this.handlers.get(command.constructor.name);
+    const handler = this.handlers.get(command.commandName());
     if (!handler) {
       throw new Error('CommandHandlerNotFoundException');
     }
@@ -30,16 +21,17 @@ export class CommandBusImpl implements CommandBus {
     this.handlers.set(id, handler);
   }
 
-  protected register(handlers: Handler[] = []) {
-    handlers.forEach((handler) => this.registerHandler(handler.commandClassName, handler.handlerContainerServiceId));
+  protected register(handlers: CommandHandler[] = []) {
+    for (const handler of handlers) {
+      this.registerHandler(handler);
+    }
   }
 
-  protected registerHandler(commandClassName: string, handlerContainerServiceId: string) {
-    const instance = this.serviceContainer.get<CommandHandler>(handlerContainerServiceId);
-    if (!instance || !(instance instanceof CommandHandler)) {
+  protected registerHandler(commandHandler: CommandHandler) {
+    if (!commandHandler || !(commandHandler instanceof CommandHandler)) {
       return;
     }
 
-    this.bind(commandClassName, instance);
+    this.bind(commandHandler.command().name, commandHandler);
   }
 }

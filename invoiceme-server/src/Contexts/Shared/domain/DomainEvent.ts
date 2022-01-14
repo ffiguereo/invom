@@ -12,7 +12,7 @@ export abstract class DomainEvent {
     this.occurredOn = occurredOn || new Date().toISOString();
   }
 
-  get eventName(): string {
+  domainEventName(): string {
     return this.constructor.name;
   };
 }

@@ -1,29 +1,32 @@
-import { CommandHandler } from '../../../Shared/domain/CommandHandler';
-import { EventBus } from '../../../Shared/domain/EventBus';
+import { CommandConstructor, CommandHandler } from '../../../Shared/domain/CommandHandler';
+import { DomainEventBus } from '../../../Shared/domain/DomainEventBus';
 import { CompanyId } from '../../Shared/domain/Company/CompanyId';
 import { Invoice } from '../domain/Invoice';
 import { InvoiceId } from '../domain/InvoiceId';
 import { InvoiceNumber } from '../domain/InvoiceNumber';
 //import { InvoiceRepository } from '../domain/InvoiceRepository';
 import { CreateInvoiceCommand } from './CreateInvoiceCommand';
-
 export class CreateInvoiceCommandHandler extends CommandHandler {
-  private readonly eventBus: EventBus;
+  private readonly domainEventBus: DomainEventBus;
 
-  constructor(eventBus: EventBus) {
+  constructor(domainEventBus: DomainEventBus) {
     super();
-    this.eventBus = eventBus;
+    this.domainEventBus = domainEventBus;
   }
 
   async doExecute(command: CreateInvoiceCommand): Promise<void> {
     const invoice = Invoice.create(
       new InvoiceId(command.id),
       new CompanyId(command.companyId),
-      new InvoiceNumber(command.invoiceNumber),
+      new InvoiceNumber(command.invoiceNumber)
     );
 
-    this.eventBus.publishAll(invoice.pullDomainEvents());
+    this.domainEventBus.publishAll(invoice.pullDomainEvents());
 
     return Promise.resolve();
+  }
+
+  command(): CommandConstructor<CreateInvoiceCommand>{
+    return CreateInvoiceCommand;
   }
 }

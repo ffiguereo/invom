@@ -1,6 +1,6 @@
 import { Query } from '../../../Shared/domain/Query';
 
-export class SearchInvoicesByCriteriaQuery implements Query {
+export class SearchInvoicesByCriteriaQuery extends Query {
   readonly filters: Array<Map<string, string>>;
   readonly orderBy: string | null;
   readonly orderType: string | null;
@@ -14,6 +14,7 @@ export class SearchInvoicesByCriteriaQuery implements Query {
     limit: number | null = null,
     offset: number | null = null
   ) {
+    super();
     this.filters = filters;
     this.orderBy = orderBy;
     this.orderType = orderType;

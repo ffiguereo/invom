@@ -1,51 +1,33 @@
 services:
 
+  Ivom.Invoices.application.CreateInvoicePdfOnInvoiceCreatedDomainEventHandler:
+    class: ../../../../Contexts/Ivom/Invoices/application/CreateInvoicePdfOnInvoiceCreatedDomainEventHandler
+    arguments: []
+
+  Shared.domain.DomainEventBus:
+    class: ../../../../Contexts/Shared/infrastructure/DomainEventBusImpl
+    arguments: [
+      '@Ivom.Invoices.application.CreateInvoicePdfOnInvoiceCreatedDomainEventHandler',
+    ]
+
   Ivom.Invoices.application.CreateInvoiceCommandHandler:
     class: ../../../../Contexts/Ivom/Invoices/application/CreateInvoiceCommandHandler
-    arguments: ['@Shared.domain.EventBus']
+    arguments: ['@Shared.domain.DomainEventBus']
 
   Ivom.Invoices.application.SearchInvoicesByCriteriaQueryHandler:
     class: ../../../../Contexts/Ivom/Invoices/application/SearchInvoicesByCriteriaQueryHandler
     arguments: []
 
-  Ivom.Invoices.application.CreateInvoicePdfOnInvoiceCreatedEventHandler:
-    class: ../../../../Contexts/Ivom/Invoices/application/CreateInvoicePdfOnInvoiceCreatedEventHandler
-    arguments: []
-
   Shared.domain.CommandBus:
     class: ../../../../Contexts/Shared/infrastructure/CommandBusImpl
     arguments: [
-      '@service_container',
-      [
-        {
-          commandClassName: 'CreateInvoiceCommand',
-          handlerContainerServiceId: 'Ivom.Invoices.application.CreateInvoiceCommandHandler'
-        }
-      ]
+      '@Ivom.Invoices.application.CreateInvoiceCommandHandler'
     ]
 
   Shared.domain.QueryBus:
     class: ../../../../Contexts/Shared/infrastructure/QueryBusImpl
     arguments: [
-      '@service_container',
-      [
-        {
-          queryClassName: 'SearchInvoicesByCriteriaQuery',
-          handlerContainerServiceId: 'Ivom.Invoices.application.SearchInvoicesByCriteriaQueryHandler'
-        }
-      ]
-    ]
-
-  Shared.domain.EventBus:
-    class: ../../../../Contexts/Shared/infrastructure/EventBusImpl
-    arguments: [
-      '@service_container',
-      [
-        {
-          eventsClassNames: ['InvoiceCreatedDomainEvent'],
-          handlerContainerServiceId: 'Ivom.Invoices.application.CreateInvoicePdfOnInvoiceCreatedEventHandler'
-        }
-      ]
+      '@Ivom.Invoices.application.SearchInvoicesByCriteriaQueryHandler'
     ]
 
   Apps.ivom.controllers.StatusGetController:
