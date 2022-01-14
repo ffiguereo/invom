@@ -69,21 +69,6 @@
     "ts-jest": "^27.1.2",
     "ts-node": "^10.4.0",
     "ts-node-dev": "^1.1.8",
-    "tslint": "^6.1.3",
-    "tslint-config-prettier": "~1.18.0",
-    "tslint-eslint-rules": "^5.4.0",
     "typescript": "^4.5.4"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "{src,tests}/**/*.ts": [
-      "prettier --write",
-      "tslint --fix",
-      "git add"
-    ]
   }
 }

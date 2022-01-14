@@ -1,5 +1,9 @@
 services:
 
+  Ivom.Invoices.domain.InvoiceRepository:
+    class: ../../../../Contexts/Ivom/Invoices/infrastructure/persistence/InMemoryInvoiceRepository
+    arguments: []
+
   Ivom.Invoices.application.CreateInvoicePdfOnInvoiceCreatedDomainEventHandler:
     class: ../../../../Contexts/Ivom/Invoices/application/CreateInvoicePdfOnInvoiceCreatedDomainEventHandler
     arguments: []
@@ -12,7 +16,7 @@ services:
 
   Ivom.Invoices.application.CreateInvoiceCommandHandler:
     class: ../../../../Contexts/Ivom/Invoices/application/CreateInvoiceCommandHandler
-    arguments: ['@Shared.domain.DomainEventBus']
+    arguments: ['@Shared.domain.DomainEventBus', '@Ivom.Invoices.domain.InvoiceRepository']
 
   Ivom.Invoices.application.SearchInvoicesByCriteriaQueryHandler:
     class: ../../../../Contexts/Ivom/Invoices/application/SearchInvoicesByCriteriaQueryHandler

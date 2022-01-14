@@ -29,7 +29,7 @@ export class DomainEventBusImpl implements DomainEventBus {
 
   protected ofEventName(name: string): Observable<DomainEvent> {
     return this.publisher.pipe(
-      filter((event) => event.domainEventName() === name),
+      filter((event) => event.domainEventName === name),
     );
   }
 
