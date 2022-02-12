@@ -2,12 +2,9 @@ import mongoose from 'mongoose'
 
 import {ENTERPRISE_MODEL_NAME} from "./EnterpriseModel";
 import {CLIENT_MODEL_NAME} from "./ClientModel";
+import {round, extractIva} from "../utils";
 
 export const INVOICE_MODEL_NAME = 'InvoiceModel';
-
-function round(num) {
-    return Math.round(num * 100) / 100;
-}
 
 const address = new mongoose.Schema({
     name: {type: String, required: true},
@@ -46,7 +43,7 @@ invoiceItem.virtual('amount').get(function () {
     const amount = this.quantity * this.unitPrice;
     const discount = this.discount || 0;
     const total = amount - (amount * (discount / 100));
-    return round(total);
+    return round(total, 2);
 });
 
 export const InvoiceStatus = {
@@ -59,18 +56,18 @@ export const InvoiceStatus = {
 const InvoiceSchema = new mongoose.Schema(
     {
         dueDate: Date,
-        currency: {type: String, required: true},
+        currency: { type: String, required: true},
         items: { type: [invoiceItem], default: [] },
-        rates: Number,
+        rates: { type: Number, default: 0},
         notes: String,
         invoiceNumber: {type: Number, required: true, unique: true},
-        type: {type: String, required: true},
+        type: { type: String, required: true},
         client: { type: mongoose.Schema.Types.ObjectId, ref: CLIENT_MODEL_NAME, required: true },
         enterprise: { type: mongoose.Schema.Types.ObjectId, ref: ENTERPRISE_MODEL_NAME, required: true },
         billingAddress: address,
         shippingAddress: address,
         paymentRecords: { type: [paymentRecord], default: [] },
-        createdAt: {type: Date, default: new Date()}
+        createdAt: { type: Date, default: new Date()}
     },
     {
         toJSON: {
@@ -79,32 +76,33 @@ const InvoiceSchema = new mongoose.Schema(
     }
 )
 
-InvoiceSchema.virtual('total').get(function () {
-    const total = this.items.reduce((previousValue, currentValue) => {
-        return previousValue + currentValue.amount;
-    }, 0);
-    return round(total);
+InvoiceSchema.virtual('rawSubtotal').get(function () {
+    return this.items.reduce((a, c) => a + extractIva(c.amount, this.rates || 0), 0);
+});
+
+InvoiceSchema.virtual('subtotal').get(function () {
+    return round(this.rawSubtotal, 2);
 });
 
 InvoiceSchema.virtual('vat').get(function () {
     const rates = this.rates || 0;
-    const vat = (rates / 100) * this.total;
-    return round(vat);
+    const vat = (rates / 100) * this.rawSubtotal;
+    return round(vat, 2);
 });
 
-InvoiceSchema.virtual('subtotal').get(function () {
-    return this.total - this.vat;
+InvoiceSchema.virtual('total').get(function () {
+    return round(this.rawSubtotal + this.vat, 2);
 });
 
 InvoiceSchema.virtual('totalAmountReceived').get(function () {
-    return round(this.paymentRecords.reduce((previousValue, currentValue) => {
+    return this.paymentRecords.reduce((previousValue, currentValue) => {
         return previousValue + currentValue.amountPaid;
-    }, 0));
+    }, 0);
 });
 
 InvoiceSchema.virtual('balance').get(function () {
-    const balance = this.total - this.totalAmountReceived;
-    return round(balance);
+    return this.total - this.totalAmountReceived;
+
 });
 
 InvoiceSchema.virtual('status').get(function () {
